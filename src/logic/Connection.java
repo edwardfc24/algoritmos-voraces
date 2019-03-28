@@ -5,6 +5,7 @@
  */
 package logic;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 /**
@@ -15,6 +16,7 @@ public class Connection {
 
     private Node _start, _finish;
     private int _weight;
+    private boolean _isKruskal = false;
 
     public Connection() {
     }
@@ -27,7 +29,17 @@ public class Connection {
     }
 
     public void Paint(Graphics g) {
-        g.drawLine(_start.getX(), _start.getY(), _finish.getX(), _finish.getY());
+        if (_isKruskal) {
+            int red = (int) (Math.random() * 206) + 50;
+            int green = (int) (Math.random() * 226) + 30;
+            int blue = (int) (Math.random() * 176) + 80;
+            g.setColor(new Color((red), (green), (blue)));
+            g.drawLine(_start.getX(), _start.getY(), _finish.getX(), _finish.getY());
+            g.setColor(Color.BLACK);
+
+        } else {
+            g.drawLine(_start.getX(), _start.getY(), _finish.getX(), _finish.getY());
+        }
         if (_start.getX() > _finish.getX() && _start.getY() > _finish.getY())// esto quiere decir que x1 esta mas a la derecha que _finish.getX() y y esta mas abajo que _finish.getY() 
         {
             g.drawString(_weight + "", _start.getX() - Math.abs((_start.getX() - _finish.getX()) / 2), _start.getY() - Math.abs((_start.getY() - _finish.getY()) / 2));
@@ -67,6 +79,14 @@ public class Connection {
 
     public void setFinish(Node _finish) {
         this._finish = _finish;
+    }
+
+    public boolean isIsKruskal() {
+        return _isKruskal;
+    }
+
+    public void setIsKruskal(boolean _isKruskal) {
+        this._isKruskal = _isKruskal;
     }
 
 }
