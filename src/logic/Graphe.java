@@ -127,6 +127,15 @@ public class Graphe<E, T> {
 
     }
 
+    public List<Connection> getMinRouteTree() {
+        return _MinRouteTree;
+    }
+
+    public void setMinRouteTree(List<Connection> _MinRouteTree) {
+        this._MinRouteTree = _MinRouteTree;
+    }
+
+    
     public List<Connection> getConnections() {
         return _connections;
     }
