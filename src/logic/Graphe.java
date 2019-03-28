@@ -143,6 +143,23 @@ public class Graphe<E, T> {
         this._nodes = nodes;
     }
 
+    public List<Connection> getMinRouteTree() {
+        return _MinRouteTree;
+    }
+
+    public void setMinRouteTree(List<Connection> _MinRouteTree) {
+        this._MinRouteTree = _MinRouteTree;
+    }
+
+    public int getActual_max() {
+        return actual_max;
+    }
+
+    public void setActual_max(int actual_max) {
+        this.actual_max = actual_max;
+    }
+    
+
     @Override
     public String toString() {
         return _nodes.toString();

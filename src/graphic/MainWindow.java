@@ -50,6 +50,11 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
             Connection connection = (Connection) _graphe.getConnections().get(i);
             connection.Paint(g);
         }
+        for (int i = 0; i < _graphe.getMinRouteTree().size(); i++) {
+            g.setColor(Color.RED);
+            Connection connection = (Connection) _graphe.getConnections().get(i);
+            connection.Paint(g);
+        }
         btnAddConnection.repaint();
         btnAddNode.repaint();
     }
@@ -169,7 +174,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
 
     private void menuItemKruskalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemKruskalActionPerformed
         this._graphe.insertMinRouteTree();
-
+        repaint();
     }//GEN-LAST:event_menuItemKruskalActionPerformed
 
     /**
