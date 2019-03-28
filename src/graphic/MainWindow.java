@@ -28,9 +28,6 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
     private Node moveNode = null;
     private int id = 0;
 
-    private int iter; //iterator to search equals numbers in kruskal
-    private boolean correct; //boolean to use when are equals numbers
-
     public MainWindow() {
         initComponents();
 
@@ -54,7 +51,6 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
             connection.Paint(g);
         }
 
-        // Forma 1 - Funcional
         if (_graphe.getMinRouteTree().size() > 0) {
             g.setColor(Color.BLUE);
 
@@ -63,42 +59,10 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
                 connection.Paint(g);
             }
         }
-        
-        // Forma 2 - No Funcional, Falta mejorar/revisar
-//        if (_graphe.getMinRouteTree().size() > 0) {
-//            this.removeAll();
-//
-//            g.setColor(Color.WHITE);
-//            g.fillRect(0, 0, getWidth(), getHeight());
-//            g.setColor(Color.BLACK);
-//
-//            for (int i = 0; i < _graphe.getNodes().size(); i++) {
-//                Node node = (Node) _graphe.getNodes().get(i);
-//                node.Paint(g);
-//            }
-//            for (Object con : _graphe.getConnections()) {
-//                for (Object object : _graphe.getMinRouteTree()) {
-//                    if (con == object) {
-//                        g.setColor(Color.BLUE);
-//
-//                        Connection connection = (Connection) con;
-//                        connection.Paint(g);
-//                    } else {
-//                        g.setColor(Color.BLACK);
-//
-//                        Connection connection = (Connection) con;
-//                        connection.Paint(g);
-//                    }
-//                }
-//            }
-//            btnAddConnection.repaint();
-//            btnAddNode.repaint();
-//            menuItemKruskal.repaint();
-//        }
 
+        menuItemKruskal.repaint();
         btnAddConnection.repaint();
         btnAddNode.repaint();
-        menuItemKruskal.repaint();
     }
 
     /**
@@ -164,7 +128,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
                 .addComponent(btnAddNode)
                 .addGap(45, 45, 45)
                 .addComponent(btnAddConnection)
-                .addContainerGap(138, Short.MAX_VALUE))
+                .addContainerGap(188, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,7 +137,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddNode)
                     .addComponent(btnAddConnection))
-                .addContainerGap(521, Short.MAX_VALUE))
+                .addContainerGap(476, Short.MAX_VALUE))
         );
 
         pack();
@@ -216,7 +180,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
 
     private void menuItemKruskalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemKruskalActionPerformed
         this._graphe.insertMinRouteTree();
-
+        this.repaint();
     }//GEN-LAST:event_menuItemKruskalActionPerformed
 
     /**
