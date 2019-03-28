@@ -54,91 +54,48 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
             connection.Paint(g);
         }
 
+        // Forma 1 - Funcional
         if (_graphe.getMinRouteTree().size() > 0) {
-            this.removeAll();
+            g.setColor(Color.BLUE);
 
-            g.setColor(Color.WHITE);
-            g.fillRect(0, 0, getWidth(), getHeight());
-            g.setColor(Color.BLACK);
-
-            for (int i = 0; i < _graphe.getNodes().size(); i++) {
-                Node node = (Node) _graphe.getNodes().get(i);
-                node.Paint(g);
+            for (int i = 0; i < _graphe.getMinRouteTree().size(); i++) {
+                Connection connection = (Connection) _graphe.getMinRouteTree().get(i);
+                connection.Paint(g);
             }
-            for (Object con : _graphe.getConnections()) {
-                for (Object object : _graphe.getMinRouteTree()) {
-                    if (con == object) {
-                        g.setColor(Color.BLUE);
-
-                        Connection connection = (Connection) con;
-                        connection.Paint(g);
-                        repaint();
-                    } else {
-                        g.setColor(Color.BLACK);
-
-                        Connection connection = (Connection) con;
-                        connection.Paint(g);
-                        repaint();
-                    }
-                }
-            }
-            btnAddConnection.repaint();
-            btnAddNode.repaint();
-            menuItemKruskal.repaint();
         }
-
+        
+        // Forma 2 - No Funcional, Falta mejorar/revisar
 //        if (_graphe.getMinRouteTree().size() > 0) {
+//            this.removeAll();
 //
-//            for (int i = 0; i < _graphe.getMinRouteTree().size(); i++) {
-//                for (int j = 0; j < _graphe.getConnections().size(); j++) {
-//                    if (_graphe.getMinRouteTree().get(i).equals(_graphe.getConnections().get(j))) {
-//                        g.setColor(Color.WHITE);
-//                        g.fillRect(0, 0, getWidth(), getHeight());
+//            g.setColor(Color.WHITE);
+//            g.fillRect(0, 0, getWidth(), getHeight());
+//            g.setColor(Color.BLACK);
+//
+//            for (int i = 0; i < _graphe.getNodes().size(); i++) {
+//                Node node = (Node) _graphe.getNodes().get(i);
+//                node.Paint(g);
+//            }
+//            for (Object con : _graphe.getConnections()) {
+//                for (Object object : _graphe.getMinRouteTree()) {
+//                    if (con == object) {
 //                        g.setColor(Color.BLUE);
-//                        Connection connection = (Connection) _graphe.getMinRouteTree().get(i);
+//
+//                        Connection connection = (Connection) con;
 //                        connection.Paint(g);
 //                    } else {
-//                        g.setColor(Color.WHITE);
-//                        g.fillRect(0, 0, getWidth(), getHeight());
 //                        g.setColor(Color.BLACK);
 //
-//                        Connection connection = (Connection) _graphe.getConnections().get(j);
+//                        Connection connection = (Connection) con;
 //                        connection.Paint(g);
 //                    }
 //                }
 //            }
-//            this.repaint();
-//            this.validate();
+//            btnAddConnection.repaint();
+//            btnAddNode.repaint();
+//            menuItemKruskal.repaint();
 //        }
-//        if (_graphe.getMinRouteTree().size() > 0) {
-//            for (int i = 0; i < _graphe.getConnections().size(); i++) {
-//                correct = false;
-//                iter = 0;
-//
-//                while ((!correct) && (iter < _graphe.getConnections().size())) {
-//                    if (_graphe.getConnections().get(iter).equals(_graphe.getMinRouteTree().get(i))) {
-//                        correct = true;
-//                        iter++;
-//                    }
-//                }
-//
-//                if (correct) {
-//                    g.setColor(Color.WHITE);
-//                    g.fillRect(0, 0, getWidth(), getHeight());
-//                    g.setColor(Color.BLUE);
-//                    Connection connection = (Connection) _graphe.getConnections().get(i);
-//                    connection.Paint(g);
-//                } else {
-//                    g.setColor(Color.WHITE);
-//                    g.fillRect(0, 0, getWidth(), getHeight());
-//                    g.setColor(Color.BLACK);
-//                    Connection connection = (Connection) _graphe.getConnections().get(i);
-//                    connection.Paint(g);
-//                }
-//            }
-//            this.repaint();
-//            this.validate();
-//        }
+
         btnAddConnection.repaint();
         btnAddNode.repaint();
         menuItemKruskal.repaint();
