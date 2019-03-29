@@ -50,6 +50,11 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
             Connection connection = (Connection) _graphe.getConnections().get(i);
             connection.Paint(g);
         }
+        g.setColor(Color.red);
+        for (int i = 0; i < _graphe.getMinRouteTree().size(); i++) {
+            Connection connection = (Connection) _graphe.getMinRouteTree().get(i);
+            connection.Paint(g);
+        }
         btnAddConnection.repaint();
         btnAddNode.repaint();
     }
@@ -138,8 +143,8 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         newNode.setId(id);
         id++;
         newNode.setContent(JOptionPane.showInputDialog("Insert graphe content"));
-        newNode.setX(Integer.parseInt(JOptionPane.showInputDialog("X valor")));
-        newNode.setY(Integer.parseInt(JOptionPane.showInputDialog("Y valor")) + 50);
+        newNode.setX(Integer.parseInt(JOptionPane.showInputDialog("X valor"))*50);
+        newNode.setY(Integer.parseInt(JOptionPane.showInputDialog("Y valor"))*50 + 50);
         _graphe.insertNode(newNode);
         repaint();
 
@@ -169,7 +174,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
 
     private void menuItemKruskalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemKruskalActionPerformed
         this._graphe.insertMinRouteTree();
-
+        repaint();
     }//GEN-LAST:event_menuItemKruskalActionPerformed
 
     /**

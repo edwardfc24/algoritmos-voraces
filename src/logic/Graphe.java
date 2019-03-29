@@ -119,12 +119,15 @@ public class Graphe<E, T> {
         System.out.println("------------------------------");
         System.out.println("--Arbol ordenado--");
         int contador = 1;
+        int pesos = 0;
         for (Connection actual : _MinRouteTree) {
             System.out.println("-Conexion " + contador);
             System.out.println("Inicio: " + actual.getStart().getId() + " \tFinal: " + actual.getFinish().getId() + "  \tPeso: " + actual.getWeight());
             contador++;
+            pesos = pesos + actual.getWeight();
         }
-
+        System.out.println("El peso total del recorrido: "+pesos);
+        
     }
 
     public List<Connection> getConnections() {
@@ -148,4 +151,13 @@ public class Graphe<E, T> {
         return _nodes.toString();
     }
 
+    public List<Connection> getMinRouteTree() {
+        return _MinRouteTree;
+    }
+
+    public void setMinRouteTree(List<Connection> _MinRouteTree) {
+        this._MinRouteTree = _MinRouteTree;
+    }
+    
+    
 }
