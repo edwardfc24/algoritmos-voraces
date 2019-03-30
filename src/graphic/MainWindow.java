@@ -71,6 +71,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         menuItemKruskal = new javax.swing.JMenuItem();
+        MenuItemDijkstra = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kruskal");
@@ -105,6 +106,15 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         });
         jMenu2.add(menuItemKruskal);
 
+        MenuItemDijkstra.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
+        MenuItemDijkstra.setText("Dijkstra");
+        MenuItemDijkstra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemDijkstraActionPerformed(evt);
+            }
+        });
+        jMenu2.add(MenuItemDijkstra);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -134,23 +144,61 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddNodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNodeActionPerformed
+        try {
+            String content = JOptionPane.showInputDialog("Insert graphe content");
+            if (content == null) {
+                return;
+            }
+            String posX = JOptionPane.showInputDialog("X valor");
+            if (posX == null) {
+                return;
+            }
+            String posY = JOptionPane.showInputDialog("Y valor");
+            if (posY == null) {
+                return;
+            }
 
-        Node newNode = new Node();
-        newNode.setId(id);
-        id++;
-        newNode.setContent(JOptionPane.showInputDialog("Insert graphe content"));
-        newNode.setX(Integer.parseInt(JOptionPane.showInputDialog("X valor")));
-        newNode.setY(Integer.parseInt(JOptionPane.showInputDialog("Y valor")) + 50);
-        _graphe.insertNode(newNode);
-        repaint();
+            Node newNode = new Node();
+            newNode.setId(id);
+            id++;
+            newNode.setContent(content);
+            newNode.setX(Integer.parseInt(posX));
+            newNode.setY(Integer.parseInt(posY) + 50);
+
+            String result = _graphe.insertNode(newNode);
+            if (!result.equals("ok")) {
+                JOptionPane.showMessageDialog(rootPane, result);
+            }
+            repaint();
+        } catch (NumberFormatException error) {
+            JOptionPane.showMessageDialog(rootPane, "Data type error:\n-Empty values are not accepted."
+                    + "\n-The content field must be a text string.\n"
+                    + "-The 'X' field must be an integer number\n"
+                    + "-The 'Y' field must be an integer number\nERROR:\n" + error.getMessage());
+        } catch (Exception error) {
+            JOptionPane.showMessageDialog(rootPane, error.getMessage());
+        }
 
     }//GEN-LAST:event_btnAddNodeActionPerformed
 
     private void btnAddConnectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddConnectionActionPerformed
         try {
-            int fromId = Integer.parseInt(JOptionPane.showInputDialog("From (insert id)"));
-            int toId = Integer.parseInt(JOptionPane.showInputDialog("To (insert id)"));
-            int weight = Integer.parseInt(JOptionPane.showInputDialog("Insert connection weight"));
+            String fromIdString = JOptionPane.showInputDialog("From (insert id)");
+            if (fromIdString == null) {
+                return;
+            }
+            String toIdString = JOptionPane.showInputDialog("To (insert id)");
+            if (toIdString == null) {
+                return;
+            }
+            String weightString = JOptionPane.showInputDialog("Insert connection weight");
+            if (weightString == null) {
+                return;
+            }
+
+            int fromId = Integer.parseInt(fromIdString);
+            int toId = Integer.parseInt(toIdString);
+            int weight = Integer.parseInt(weightString);
 
             String result = this._graphe.insertConnection(fromId, toId, weight);
             if (!result.equals("ok")) {
@@ -172,6 +220,36 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         this._graphe.insertMinRouteTree();
         this.repaint();
     }//GEN-LAST:event_menuItemKruskalActionPerformed
+
+    private void MenuItemDijkstraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemDijkstraActionPerformed
+        // TODO add your handling code here:
+
+        try {
+
+            String toIdString = JOptionPane.showInputDialog("To (insert id)");
+            if (toIdString == null) {
+                return;
+            }
+            String fromIdString = JOptionPane.showInputDialog("From (insert id)");
+            if (fromIdString == null) {
+                return;
+            }
+
+            int toId = Integer.parseInt(toIdString);
+            int fromId = Integer.parseInt(fromIdString);
+            String result =this._graphe.runDijkstra(toId, fromId);
+//            String result = this._graphe.getDijkstra().insertStartAndFinishNode(toId, fromId);
+            if (!result.equals("ok")) {
+                JOptionPane.showMessageDialog(rootPane, result);
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(rootPane, "-The start field must be an integer number\n"
+                    + "-The finish field must be an integer number\nERROR:\n" + e.getMessage());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        }
+    }//GEN-LAST:event_MenuItemDijkstraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -198,6 +276,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem MenuItemDijkstra;
     private javax.swing.JButton btnAddConnection;
     private javax.swing.JButton btnAddNode;
     private javax.swing.JMenu jMenu1;

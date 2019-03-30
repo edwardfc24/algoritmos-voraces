@@ -21,27 +21,30 @@ public class Graphe<E, T> {
     private List<Connection> _connections = new LinkedList<>();
     private List<Connection> _MinRouteTree = new LinkedList<>();
     public int actual_max = 0;
+    private Dijkstra dijkstra = new Dijkstra(_nodes, _connections);
 
     public Graphe() {
     }
 
-    public void insertNode(E id, T content, int x, int y) {
+    public String insertNode(E id, T content, int x, int y) {
         Node<T> node = new Node(content, id);
         if (_nodes.containsKey(id)) {
             System.out.println("Node already exits");
-        } else {
-            node.setX(x);
-            node.setY(y);
-            _nodes.put(id, node);
+            return "The node with id: con el identificador " + id + " already exist.";
         }
+        node.setX(x);
+        node.setY(y);
+        _nodes.put(id, node);
+        return "ok";
     }
 
-    public void insertNode(Node node) {
+    public String insertNode(Node node) {
         if (_nodes.containsKey((E) node.getId())) {
             System.out.println("Node id: " + node.getId() + " already exits");
-        } else {
-            _nodes.put((E) node.getId(), node);
+            return "The node with id: con el identificador " + node.getId() + " already exist.";
         }
+        _nodes.put((E) node.getId(), node);
+        return "ok";
     }
 
     public String insertConnection(int fromId, int toId, int weight) {
@@ -108,12 +111,27 @@ public class Graphe<E, T> {
             }
             if (!(flag1 && flag2)) {
                 _MinRouteTree.add(connection);
+                connection.setIsKruskal(true);
             }
         }
 
-        for (Connection actual : _MinRouteTree) {
-            actual.setIsKruskal(true);
+    }
+
+    public String runDijkstra(int toId, int fromId) {
+
+        String insertResult = dijkstra.insertStartAndFinishNode(toId, fromId);
+        if (!insertResult.equals("ok")) {
+            return insertResult;
         }
+
+        List<Connection> listAux = dijkstra.verifyConnections();
+        if (listAux == null) {
+            return "Start and end nodes are not defined";
+        }
+        for (Connection actual : listAux) {
+            System.out.println(actual.getStart().getId() + " " + actual.getFinish().getId() + " " + actual.getWeight());
+        }
+        return "ok";
     }
 
     public List<Connection> getConnections() {
@@ -130,6 +148,14 @@ public class Graphe<E, T> {
 
     public void setNodes(HashMap<E, Node<T>> nodes) {
         this._nodes = nodes;
+    }
+
+    public Dijkstra getDijkstra() {
+        return dijkstra;
+    }
+
+    public void setDijkstra(Dijkstra dijkstra) {
+        this.dijkstra = dijkstra;
     }
 
     @Override
