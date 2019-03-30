@@ -7,6 +7,7 @@ package graphic;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.HeadlessException;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -52,6 +53,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         }
         btnAddConnection.repaint();
         btnAddNode.repaint();
+        menuItemKruskal.repaint();
     }
 
     /**
@@ -73,7 +75,6 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kruskal");
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(600, 550));
 
         btnAddNode.setBackground(new java.awt.Color(255, 255, 255));
         btnAddNode.setText("Add Node");
@@ -161,7 +162,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
                     + "\n-The weight field must be an integer number.\n"
                     + "-The start field must be an integer number\n"
                     + "-The finish field must be an integer number\nERROR:\n" + error.getMessage());
-        } catch (Exception error) {
+        } catch (HeadlessException error) {
             JOptionPane.showMessageDialog(rootPane, error.getMessage());
         }
 
@@ -169,7 +170,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
 
     private void menuItemKruskalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemKruskalActionPerformed
         this._graphe.insertMinRouteTree();
-
+        this.repaint();
     }//GEN-LAST:event_menuItemKruskalActionPerformed
 
     /**
@@ -188,24 +189,11 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-//                new MainWindow().setVisible(true);
-                MainWindow w = new MainWindow();
-
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            MainWindow w = new MainWindow();
         });
     }
 
