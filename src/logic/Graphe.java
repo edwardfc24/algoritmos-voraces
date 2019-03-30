@@ -5,12 +5,9 @@
  */
 package logic;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 /**
  *
@@ -109,22 +106,14 @@ public class Graphe<E, T> {
 
                 }
             }
-            if (flag1 && flag2) {
-                continue;
-            } else {
+            if (!(flag1 && flag2)) {
                 _MinRouteTree.add(connection);
             }
         }
 
-        System.out.println("------------------------------");
-        System.out.println("--Arbol ordenado--");
-        int contador = 1;
         for (Connection actual : _MinRouteTree) {
-            System.out.println("-Conexion " + contador);
-            System.out.println("Inicio: " + actual.getStart().getId() + " \tFinal: " + actual.getFinish().getId() + "  \tPeso: " + actual.getWeight());
-            contador++;
+            actual.setIsKruskal(true);
         }
-
     }
 
     public List<Connection> getConnections() {
