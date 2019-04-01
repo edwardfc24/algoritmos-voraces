@@ -8,6 +8,7 @@ package logic;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,6 +21,7 @@ public class Graphe<E, T> {
     private HashMap<E, Node<T>> _nodes = new HashMap<>();
     private List<Connection> _connections = new LinkedList<>();
     private List<Connection> _MinRouteTree = new LinkedList<>();
+    private List<Connection> _Dijkstra = new LinkedList<>();
     public int actual_max = 0;
 
     public Graphe() {
@@ -135,6 +137,56 @@ public class Graphe<E, T> {
     @Override
     public String toString() {
         return _nodes.toString();
+    }
+
+    public void DijkstraVerification(int start, int finish) {
+
+        if (!this._nodes.containsKey(start) && !this._nodes.containsKey(finish)) {
+            JOptionPane.showMessageDialog(null, "The node doesn't exist");
+        } else {
+            verifyConnections(start, finish);
+        }
+    }
+
+    private void verifyConnections(int start, int finish) {
+        Node<E> _Start = (Node<E>) _nodes.get(start);
+        int max_weight = 0;
+        _Dijkstra.clear();
+        for (Connection actualConnection : _connections) {
+            if (_Start.equals(actualConnection.getStart()) || _Start.equals(actualConnection.getFinish())) {
+                if (actualConnection.getWeight() > max_weight) {
+                    _Dijkstra.add(actualConnection);
+                    max_weight = actualConnection.getWeight();
+                } else {
+                    int position = 0;
+                    List<Connection> auxList = new LinkedList<>();
+                    auxList.addAll(_Dijkstra);
+                    _Dijkstra.clear();
+                    for (Connection item : auxList) {
+                        if (actualConnection.getWeight() > item.getWeight()) {
+                            _Dijkstra.add(item);
+                        } else {
+                            _Dijkstra.add(actualConnection);
+                            break;
+                        }
+                        position++;
+                    }
+                    _Dijkstra.addAll(auxList.subList(position, auxList.size()));
+                }
+            }
+        }
+    }
+
+    public List<Connection> getDijkstra() {
+        return _Dijkstra;
+    }
+
+    public void setDijkstra(List<Connection> _Dijkstra) {
+        this._Dijkstra = _Dijkstra;
+    }
+
+    private Node nextNode(Connection connection) {
+        return connection.getFinish();
     }
 
 }

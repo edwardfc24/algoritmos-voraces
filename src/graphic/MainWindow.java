@@ -51,9 +51,19 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
             Connection connection = (Connection) _graphe.getConnections().get(i);
             connection.Paint(g);
         }
+
+        if (_graphe.getDijkstra().size() > 0) {
+            g.setColor(Color.PINK);
+            for (int i = 0; i < _graphe.getDijkstra().size(); i++) {
+                Connection connection = (Connection) _graphe.getDijkstra().get(i);
+                connection.Paint(g);
+                System.out.println("Connection: " + connection.getStart().getId() + " - " + connection.getFinish().getId() + " - " + connection.getWeight());
+            }
+        }
         btnAddConnection.repaint();
         btnAddNode.repaint();
         menuItemKruskal.repaint();
+        jMenuBar1.repaint();
     }
 
     /**
@@ -70,6 +80,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItemDijkstra = new javax.swing.JMenuItem();
         menuItemKruskal = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -95,6 +106,16 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Methods");
+
+        jMenuItemDijkstra.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemDijkstra.setText("Dijkstra");
+        jMenuItemDijkstra.setActionCommand("Dijkstra");
+        jMenuItemDijkstra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemDijkstraActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemDijkstra);
 
         menuItemKruskal.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_MASK));
         menuItemKruskal.setText("Kruskal");
@@ -134,16 +155,18 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddNodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNodeActionPerformed
-
-        Node newNode = new Node();
-        newNode.setId(id);
-        id++;
-        newNode.setContent(JOptionPane.showInputDialog("Insert graphe content"));
-        newNode.setX(Integer.parseInt(JOptionPane.showInputDialog("X valor")));
-        newNode.setY(Integer.parseInt(JOptionPane.showInputDialog("Y valor")) + 50);
-        _graphe.insertNode(newNode);
-        repaint();
-
+        try {
+            Node newNode = new Node();
+            newNode.setId(id);
+            id++;
+            newNode.setContent(JOptionPane.showInputDialog("Insert graphe content"));
+            newNode.setX(Integer.parseInt(JOptionPane.showInputDialog("X valor")));
+            newNode.setY(Integer.parseInt(JOptionPane.showInputDialog("Y valor")) + 50);
+            _graphe.insertNode(newNode);
+            repaint();
+        } catch (HeadlessException | NumberFormatException e) {
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
     }//GEN-LAST:event_btnAddNodeActionPerformed
 
     private void btnAddConnectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddConnectionActionPerformed
@@ -172,6 +195,13 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         this._graphe.insertMinRouteTree();
         this.repaint();
     }//GEN-LAST:event_menuItemKruskalActionPerformed
+
+    private void jMenuItemDijkstraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDijkstraActionPerformed
+        int start = Integer.parseInt(JOptionPane.showInputDialog("Insert the start node"));
+        int finish = Integer.parseInt(JOptionPane.showInputDialog("Insert the finish node"));
+        this._graphe.DijkstraVerification(start, finish);
+        this.repaint();
+    }//GEN-LAST:event_jMenuItemDijkstraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,6 +233,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItemDijkstra;
     private javax.swing.JMenuItem menuItemKruskal;
     // End of variables declaration//GEN-END:variables
 
