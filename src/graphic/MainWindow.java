@@ -11,6 +11,8 @@ import java.awt.HeadlessException;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.LinkedList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import logic.*;
 
@@ -32,9 +34,18 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
     public MainWindow() {
         initComponents();
 
-        this.setLocationRelativeTo(null);
-        this.addMouseListener(this);
-        this.setVisible(true);
+        addMouseListener(this);
+        setLocationRelativeTo(null);
+        setVisible(true);
+
+        List<Node> insertNodes = new LinkedList<>();
+        insertNodes.add(new Node(0, "node0", 100, 150));
+        insertNodes.add(new Node(1, "node1", 250, 150));
+        insertNodes.add(new Node(2, "node2", 180, 230));
+        insertNodes.add(new Node(3, "node3", 100, 300));
+        insertNodes.add(new Node(4, "node4", 250, 300));
+        _graphe.insertNodesList(insertNodes);
+        id = _graphe.getNodes().size();
     }
 
     @Override
@@ -51,6 +62,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
             Connection connection = (Connection) _graphe.getConnections().get(i);
             connection.Paint(g);
         }
+        _graphe.cleanBool();
         btnAddConnection.repaint();
         btnAddNode.repaint();
         menuItemKruskal.repaint();
@@ -68,9 +80,10 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         btnAddNode = new javax.swing.JButton();
         btnAddConnection = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         menuItemKruskal = new javax.swing.JMenuItem();
+        menuItemDijkstra = new javax.swing.JMenuItem();
+        menuItemPrim = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kruskal");
@@ -91,9 +104,6 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
             }
         });
 
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
-
         jMenu2.setText("Methods");
 
         menuItemKruskal.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_MASK));
@@ -104,6 +114,20 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
             }
         });
         jMenu2.add(menuItemKruskal);
+
+        menuItemDijkstra.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
+        menuItemDijkstra.setText("Dijkstra");
+        menuItemDijkstra.setActionCommand("Dijkstra");
+        menuItemDijkstra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemDijkstraActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuItemDijkstra);
+
+        menuItemPrim.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
+        menuItemPrim.setText("Prim");
+        jMenu2.add(menuItemPrim);
 
         jMenuBar1.add(jMenu2);
 
@@ -173,6 +197,10 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         this.repaint();
     }//GEN-LAST:event_menuItemKruskalActionPerformed
 
+    private void menuItemDijkstraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemDijkstraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuItemDijkstraActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -200,10 +228,11 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddConnection;
     private javax.swing.JButton btnAddNode;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem menuItemDijkstra;
     private javax.swing.JMenuItem menuItemKruskal;
+    private javax.swing.JMenuItem menuItemPrim;
     // End of variables declaration//GEN-END:variables
 
     @Override

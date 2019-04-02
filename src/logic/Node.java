@@ -27,6 +27,13 @@ public class Node<E> {
         this._content = content;
     }
 
+    public Node(E _id, E _content, int x, int y) {
+        this._id = _id;
+        this._content = _content;
+        this.x = x;
+        this.y = y;
+    }
+
     public void Paint(Graphics g) {
         g.drawOval(this.x - d / 2, this.y - d / 2, d, d);
         String sentence = _id.toString() + ", " + _content.toString();

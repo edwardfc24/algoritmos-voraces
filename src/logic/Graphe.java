@@ -26,7 +26,7 @@ public class Graphe<E, T> {
     }
 
     public void insertNode(E id, T content, int x, int y) {
-        Node<T> node = new Node(content, id);
+        Node<T> node = new Node(id, content);
         if (_nodes.containsKey(id)) {
             System.out.println("Node already exits");
         } else {
@@ -135,6 +135,24 @@ public class Graphe<E, T> {
     @Override
     public String toString() {
         return _nodes.toString();
+    }
+
+    public void insertNodesList(List<Node> list) {
+        for (Node node : list) {
+            insertNode((E) node.getId(), (T) node.getContent(), node.getX(), node.getY());
+        }
+        _connections.add(new Connection((int) (Math.random() * 10 + 1), _nodes.get(0), _nodes.get(1)));
+        _connections.add(new Connection((int) (Math.random() * 10 + 1), _nodes.get(0), _nodes.get(2)));
+        _connections.add(new Connection((int) (Math.random() * 10 + 1), _nodes.get(0), _nodes.get(3)));
+        _connections.add(new Connection((int) (Math.random() * 10 + 1), _nodes.get(1), _nodes.get(4)));
+        _connections.add(new Connection((int) (Math.random() * 10 + 1), _nodes.get(2), _nodes.get(4)));
+        _connections.add(new Connection((int) (Math.random() * 10 + 1), _nodes.get(3), _nodes.get(4)));
+    }
+    
+    public void cleanBool(){
+        for (Connection _connection : _connections) {
+            _connection.setIsKruskal(false);
+        }
     }
 
 }
