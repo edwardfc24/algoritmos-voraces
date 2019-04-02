@@ -73,7 +73,9 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         btnClear = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        grafo1 = new javax.swing.JMenuItem();
+        grafo2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         menuItemKruskal = new javax.swing.JMenuItem();
 
@@ -105,14 +107,25 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
 
         jMenu1.setText("File");
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem1.setText("Grafos Prefabricados");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jMenu3.setText("Grafos Prefabricados");
+
+        grafo1.setText("Grafo 1");
+        grafo1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                grafo1ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu3.add(grafo1);
+
+        grafo2.setText("Grafo 2");
+        grafo2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                grafo2ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(grafo2);
+
+        jMenu1.add(jMenu3);
 
         jMenuBar1.add(jMenu1);
 
@@ -204,9 +217,73 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         this._graphe.insertMinRouteTree();
         repaint();
     }//GEN-LAST:event_menuItemKruskalActionPerformed
+    private void jMenuItemDijkstraActionPerformed(java.awt.event.ActionEvent evt) {
+        int start = Integer.parseInt(JOptionPane.showInputDialog("Insert the start node"));
+        int finish = Integer.parseInt(JOptionPane.showInputDialog("Insert the finish node"));
+        this._graphe.DijkstraVerification(start, finish);
+        this.repaint();
+    }
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        id = 0;
+        //Se le quito el final a la variable _graphe
+        _graphe = new Graphe();
+        repaint();
+    }//GEN-LAST:event_btnClearActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void grafo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grafo2ActionPerformed
+        id = 0;
+        //Se le quito el final a la variable _graphe
+        _graphe = new Graphe();
+        
+        Node nodoPrefab1 = new Node(id, 7, 100, 200);
+        id++;
+        Node nodoPrefab2 = new Node(id, 3, 350, 450);
+        id++;
+        Node nodoPrefab3 = new Node(id, 5, 150, 550);
+        id++;
+        Node nodoPrefab4 = new Node(id, 9, 400, 300);
+        id++;
+        Node nodoPrefab5 = new Node(id, 8, 250, 300);
+        id++;
+        Node nodoPrefab6 = new Node(id, 1, 550, 250);
+        id++;
+        Node nodoPrefab7 = new Node(id, 1, 600, 400);
+        id++;
+        
+        _graphe.insertNode(nodoPrefab1);
+        _graphe.insertNode(nodoPrefab2);
+        _graphe.insertNode(nodoPrefab3);
+        _graphe.insertNode(nodoPrefab4);
+        _graphe.insertNode(nodoPrefab5);
+        _graphe.insertNode(nodoPrefab6);
+        _graphe.insertNode(nodoPrefab7);
+        
+        String result2 = this._graphe.insertConnection(4, 2, 7);
+        if (!result2.equals("ok")) {
+            JOptionPane.showMessageDialog(this, result2);
+        }
 
+        for (int i = 0, j = 1; j <= 6; i++, j++) {
+            int aleatorio = (int) Math.floor(Math.random() * 20);
+            //                                           01 12 23 34
+            System.out.println(i + " - " + j + " - " + aleatorio);
+            String result = this._graphe.insertConnection(i, j, aleatorio);
+            if (!result.equals("ok")) {
+                JOptionPane.showMessageDialog(this, result);
+            }
+        }
+        repaint();
+        
+        
+        repaint();
+
+    }//GEN-LAST:event_grafo2ActionPerformed
+
+    private void grafo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grafo1ActionPerformed
+        id = 0;
+        //Se le quito el final a la variable _graphe
+        _graphe = new Graphe();
+        
         Node nodoPrefab1 = new Node(id, 7, 200, 200);
         id++;
         Node nodoPrefab5 = new Node(id, 3, 100, 350);
@@ -230,25 +307,17 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         }
 
         for (int i = 0, j = 1; j <= 4; i++, j++) {
-                int aleatorio = (int) Math.floor(Math.random() * 20);
-                //                                           01 12 23 34
-                System.out.println(i+" - "+j+" - "+aleatorio);
-                String result = this._graphe.insertConnection(i, j, aleatorio);
-                if (!result.equals("ok")) {
-                    JOptionPane.showMessageDialog(this, result);
-                }
-                repaint();                
+            int aleatorio = (int) Math.floor(Math.random() * 20);
+            //                                           01 12 23 34
+            System.out.println(i + " - " + j + " - " + aleatorio);
+            String result = this._graphe.insertConnection(i, j, aleatorio);
+            if (!result.equals("ok")) {
+                JOptionPane.showMessageDialog(this, result);
+            }
         }
         repaint();
 
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-        id=0;
-        //Se le quito el final a la variable _graphe
-        _graphe = new Graphe();
-        repaint();
-    }//GEN-LAST:event_btnClearActionPerformed
+    }//GEN-LAST:event_grafo1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -291,10 +360,12 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
     private javax.swing.JButton btnAddConnection;
     private javax.swing.JButton btnAddNode;
     private javax.swing.JButton btnClear;
+    private javax.swing.JMenuItem grafo1;
+    private javax.swing.JMenuItem grafo2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem menuItemKruskal;
     // End of variables declaration//GEN-END:variables
 

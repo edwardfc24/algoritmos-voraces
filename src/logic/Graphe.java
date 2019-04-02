@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -129,6 +130,14 @@ public class Graphe<E, T> {
         System.out.println("El peso total del recorrido: "+pesos);
         
     }
+    public void DijkstraVerification(int start, int finish) {
+
+        if (!this._nodes.containsKey(start) && !this._nodes.containsKey(finish)) {
+            JOptionPane.showMessageDialog(null, "The node doesn't exist");
+        } else {
+            verifyConnections(start, finish);
+        }
+    }
 
     public List<Connection> getConnections() {
         return _connections;
@@ -157,6 +166,10 @@ public class Graphe<E, T> {
 
     public void setMinRouteTree(List<Connection> _MinRouteTree) {
         this._MinRouteTree = _MinRouteTree;
+    }
+
+    private void verifyConnections(int start, int finish) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     
