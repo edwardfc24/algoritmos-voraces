@@ -20,6 +20,7 @@ public class Graphe<E, T> {
     private HashMap<E, Node<T>> _nodes = new HashMap<>();
     private List<Connection> _connections = new LinkedList<>();
     private List<Connection> _MinRouteTree = new LinkedList<>();
+    private List<Connection> _verifiedConnections = new LinkedList<>();
     public int actual_max = 0;
 
     public Graphe() {
@@ -116,6 +117,21 @@ public class Graphe<E, T> {
         }
     }
 
+    public String requestNodes(int start, int end) {
+        if (start == end) {
+            System.out.println("Should be differents nodes");
+            return "Should be differents nodes";
+        }
+        if (!this._nodes.containsKey(start) && !this._nodes.containsKey(end)) {
+            System.out.println("One of the entered nodes does not exist.");
+            return "One of the entered nodes does not exist.";
+        }
+
+        verify(start, end);
+
+        return "";
+    }
+
     public List<Connection> getConnections() {
         return _connections;
     }
@@ -135,6 +151,63 @@ public class Graphe<E, T> {
     @Override
     public String toString() {
         return _nodes.toString();
+    }
+
+    private void verify(int start, int end) {
+        Node<E> _Start = (Node<E>) _nodes.get(start);
+        Node<E> _Finish = (Node<E>) _nodes.get(end);
+        int max_weight = 0;
+        _verifiedConnections.clear();
+        for (Connection actualConnection : _connections) {
+            if (_Start.equals(actualConnection.getStart()) || _Start.equals(actualConnection.getFinish())) {
+                if (actualConnection.getWeight() > max_weight) {
+                    _verifiedConnections.add(actualConnection);
+                    max_weight = actualConnection.getWeight();
+                } else {
+                    List<Connection> auxList = new LinkedList<>();
+                    auxList.addAll(_verifiedConnections);
+                    _verifiedConnections.clear();
+                    int contador = 0;
+                    for (Connection item : auxList) {
+                        if (actualConnection.getWeight() > item.getWeight()) {
+                            _verifiedConnections.add(item);
+                        } else {
+                            _verifiedConnections.add(actualConnection);
+                            break;
+                        }
+                        contador++;
+                    }
+                    _verifiedConnections.addAll(auxList.subList(contador, auxList.size()));
+                }
+            }
+        }
+        for (Connection verified : _verifiedConnections) {
+            verified.setIsVerifiedConnections(true);
+        }
+    }
+
+    public List<Connection> getMinRouteTree() {
+        return _MinRouteTree;
+    }
+
+    public void setMinRouteTree(List<Connection> _MinRouteTree) {
+        this._MinRouteTree = _MinRouteTree;
+    }
+
+    public List<Connection> getVerifiedConnections() {
+        return _verifiedConnections;
+    }
+
+    public void setVerifiedConnections(List<Connection> _verifiedConnections) {
+        this._verifiedConnections = _verifiedConnections;
+    }
+
+    public int getActual_max() {
+        return actual_max;
+    }
+
+    public void setActual_max(int actual_max) {
+        this.actual_max = actual_max;
     }
 
 }

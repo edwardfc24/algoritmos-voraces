@@ -17,6 +17,7 @@ public class Connection {
     private Node _start, _finish;
     private int _weight;
     private boolean _isKruskal = false;
+    private boolean _isVerifiedConnections = false;
 
     public Connection() {
     }
@@ -29,7 +30,7 @@ public class Connection {
     }
 
     public void Paint(Graphics g) {
-        if (_isKruskal) {
+        if (_isKruskal || _isVerifiedConnections) {
             int red = (int) (Math.random() * 206) + 50;
             int green = (int) (Math.random() * 226) + 30;
             int blue = (int) (Math.random() * 176) + 80;
@@ -89,4 +90,13 @@ public class Connection {
         this._isKruskal = _isKruskal;
     }
 
+    public boolean isIsVerifiedConnections() {
+        return _isVerifiedConnections;
+    }
+
+    public void setIsVerifiedConnections(boolean _isVerifiedConnections) {
+        this._isVerifiedConnections = _isVerifiedConnections;
+    }
+    
+    
 }

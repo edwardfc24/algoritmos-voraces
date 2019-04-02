@@ -51,6 +51,11 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
             Connection connection = (Connection) _graphe.getConnections().get(i);
             connection.Paint(g);
         }
+        for (int i = 0; i < _graphe.getVerifiedConnections().size(); i++) {
+            Connection connection = (Connection) _graphe.getVerifiedConnections().get(i);
+            System.out.println("Nodo Inicio " + connection.getStart() + "Nodo Final " + connection.getFinish() + "Peso " + connection.getWeight());
+//            connection.Paint(g);
+        }
         btnAddConnection.repaint();
         btnAddNode.repaint();
         menuItemKruskal.repaint();
@@ -71,6 +76,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         menuItemKruskal = new javax.swing.JMenuItem();
+        jMenuDijkstra = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kruskal");
@@ -104,6 +110,14 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
             }
         });
         jMenu2.add(menuItemKruskal);
+
+        jMenuDijkstra.setText("Dijkstra");
+        jMenuDijkstra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuDijkstraActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuDijkstra);
 
         jMenuBar1.add(jMenu2);
 
@@ -173,6 +187,13 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         this.repaint();
     }//GEN-LAST:event_menuItemKruskalActionPerformed
 
+    private void jMenuDijkstraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuDijkstraActionPerformed
+        int idStart = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el id del nodo de Inicio"));
+        int idEnd = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el id del nodo Final"));
+        _graphe.requestNodes(idStart, idEnd);
+        this.repaint();
+    }//GEN-LAST:event_jMenuDijkstraActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -203,6 +224,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuDijkstra;
     private javax.swing.JMenuItem menuItemKruskal;
     // End of variables declaration//GEN-END:variables
 
