@@ -13,6 +13,7 @@ public class AdjacentList {
     public int weight;
     public Node ancester;
     public Node actualNode;
+    public boolean isLowest;
 
     public int getWeight() {
         return weight;
@@ -32,6 +33,14 @@ public class AdjacentList {
 
     public Node getActualNode() {
         return actualNode;
+    }
+
+    public boolean isIsLowest() {
+        return isLowest;
+    }
+
+    public void setIsLowest(boolean isLowest) {
+        this.isLowest = isLowest;
     }
 
     public void setActualNode(Node actualNode) {

@@ -124,7 +124,6 @@ public class Dijkstra<E, T> {
     public String getDijsktra() {
         AdjacentList first = new AdjacentList(0, null, _Start);
         forVisit.add(first);
-        first.actualNode.isVisited = true;
         while (!forVisit.isEmpty()) {
             // Obtengo el adyacente actual
             AdjacentList previous_adjacent = forVisit.poll();
