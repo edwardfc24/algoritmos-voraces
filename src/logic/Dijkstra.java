@@ -8,6 +8,7 @@ package logic;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
 
 /**
  *
@@ -19,6 +20,7 @@ public class Dijkstra<E, T> {
     private List<Connection> _StartConnection = new LinkedList<>();
     private List<Connection> _connections = new LinkedList<>();
     private HashMap<E, Node<T>> _nodes = new HashMap<>();
+    public PriorityQueue<AdjacentList> forVisit;
 
     public Dijkstra() {
     }
@@ -26,6 +28,7 @@ public class Dijkstra<E, T> {
     public Dijkstra(HashMap<E, Node<T>> nodes, List<Connection> connections) {
         this._nodes = nodes;
         this._connections = connections;
+        this.forVisit = new PriorityQueue<AdjacentList>();
     }
 
     public String insertStartAndFinishNode(int toId, int fromId) {
@@ -44,14 +47,14 @@ public class Dijkstra<E, T> {
         return "ok";
     }
 
-    public List<Connection> verifyConnections() {
-        if (_Start == null) {
+    public List<Connection> verifyConnections(Node index) {
+        if (index == null) {
             return null;
         }
         int max_weight = 0;
         _StartConnection.clear();
         for (Connection actualConnection : _connections) {
-            if (_Start.equals(actualConnection.getStart()) || _Start.equals(actualConnection.getFinish())) {
+            if (index.equals(actualConnection.getStart())) {
                 if (actualConnection.getWeight() > max_weight) {
                     _StartConnection.add(actualConnection);
                     max_weight = actualConnection.getWeight();
@@ -74,7 +77,7 @@ public class Dijkstra<E, T> {
 
             }
         }
-        
+
         return _StartConnection;
     }
 
@@ -116,6 +119,29 @@ public class Dijkstra<E, T> {
 
     public void setNodes(HashMap<E, Node<T>> _nodes) {
         this._nodes = _nodes;
+    }
+
+    public String getDijsktra() {
+        AdjacentList first = new AdjacentList(0, null, _Start);
+        forVisit.add(first);
+        first.actualNode.isVisited = true;
+        while (!forVisit.isEmpty()) {
+            // Obtengo el adyacente actual
+            AdjacentList previous_adjacent = forVisit.poll();
+            // Obtengo el nodo predecesor
+            Node previous = previous_adjacent.getActualNode();
+            // Obtengo las conexiones previas y escojo la mas cercana
+            List<Connection> connections = verifyConnections(previous);
+            ///**** Debe repetirse
+            Connection conn = connections.get(0); // getAdjacentes->PriorityQueue
+            Node actual = _nodes.get(conn.getFinish().getId());
+            // Almacenar la relacion con el predecesor
+            AdjacentList adjacent = new AdjacentList(previous_adjacent.getWeight() + conn.getWeight(), previous, actual);
+            forVisit.add(adjacent);
+            ////*****
+            actual.isVisited = true;
+        }
+        return "";
     }
 
 }

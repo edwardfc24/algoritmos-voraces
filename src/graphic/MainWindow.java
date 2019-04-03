@@ -237,8 +237,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
 
             int toId = Integer.parseInt(toIdString);
             int fromId = Integer.parseInt(fromIdString);
-            String result =this._graphe.runDijkstra(toId, fromId);
-//            String result = this._graphe.getDijkstra().insertStartAndFinishNode(toId, fromId);
+            String result = this._graphe.getDijkstra().insertStartAndFinishNode(toId, fromId);
             if (!result.equals("ok")) {
                 JOptionPane.showMessageDialog(rootPane, result);
             }

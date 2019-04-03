@@ -124,7 +124,7 @@ public class Graphe<E, T> {
             return insertResult;
         }
 
-        List<Connection> listAux = dijkstra.verifyConnections();
+        List<Connection> listAux = dijkstra.verifyConnections(dijkstra.getStart());
         if (listAux == null) {
             return "Start and end nodes are not defined";
         }

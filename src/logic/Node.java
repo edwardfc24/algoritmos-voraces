@@ -16,8 +16,8 @@ public class Node<E> {
     private E _id;
     private E _content;
     public static final int d = 60; //circulo de 60 pts
-
     private int x, y;
+    public boolean isVisited;
 
     public Node() {
     }
