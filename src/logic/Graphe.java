@@ -20,6 +20,7 @@ public class Graphe<E, T> {
     private HashMap<E, Node<T>> _nodes = new HashMap<>();
     private List<Connection> _connections = new LinkedList<>();
     private List<Connection> _MinRouteTree = new LinkedList<>();
+    private List<Connection> _RoutePrim = new LinkedList<>();
     public int actual_max = 0;
 
     public Graphe() {
@@ -111,9 +112,46 @@ public class Graphe<E, T> {
             }
         }
 
-        for (Connection actual : _MinRouteTree) {
+        _MinRouteTree.forEach((actual) -> {
             actual.setIsKruskal(true);
+        });
+    }
+
+    public void insertPrim() {
+        List<Connection> auxList = new LinkedList<>();
+        for (Connection _connections : _connections) {
+            System.out.println("Start: " + _connections.getStart() + " - Finish: " + _connections.getFinish() + " - Peso: " + _connections.getWeight());
         }
+        for (Connection connection : _connections) {
+            boolean flag1 = false;
+            boolean flag2 = false;
+            for (Connection RoutePrim : _RoutePrim) {
+                if (connection.getStart().equals(RoutePrim.getStart()) || connection.getStart().equals(RoutePrim.getFinish())) {
+                    flag1 = true;
+                }
+                if (connection.getFinish().equals(RoutePrim.getStart()) || connection.getFinish().equals(RoutePrim.getFinish())) {
+                    flag2 = true;
+                }
+            }
+            if (flag1 == false || flag2 == false) {
+                _RoutePrim.add(connection);
+                for (Connection connection1 : _RoutePrim) {
+                    System.out.println("Prim\n" + "Start: " + connection1.getStart() + " - Finish: " + connection1.getFinish() + " - Peso: " + connection1.getWeight());
+                }
+            }
+        }
+
+        for (Connection actual : _RoutePrim) {
+            actual.setIsPrim(true);
+        }
+    }
+
+    public List<Connection> getRoutePrim() {
+        return _RoutePrim;
+    }
+
+    public void setRoutePrim(List<Connection> _RoutePrim) {
+        this._RoutePrim = _RoutePrim;
     }
 
     public List<Connection> getConnections() {

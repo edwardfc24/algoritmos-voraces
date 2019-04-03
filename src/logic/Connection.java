@@ -17,6 +17,7 @@ public class Connection {
     private Node _start, _finish;
     private int _weight;
     private boolean _isKruskal = false;
+    private boolean _isPrim = false;
 
     public Connection() {
     }
@@ -87,6 +88,14 @@ public class Connection {
 
     public void setIsKruskal(boolean _isKruskal) {
         this._isKruskal = _isKruskal;
+    }
+    
+    public boolean isPrim() {
+        return _isPrim;
+    }
+
+    public void setIsPrim(boolean _isPrim) {
+        this._isPrim = _isPrim;
     }
 
 }

@@ -51,9 +51,17 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
             Connection connection = (Connection) _graphe.getConnections().get(i);
             connection.Paint(g);
         }
+        if (_graphe.getRoutePrim().size() > 0) {
+            g.setColor(Color.red);
+            for (int i = 0; i < _graphe.getRoutePrim().size(); i++) {
+                Connection connection = (Connection) _graphe.getRoutePrim().get(i);
+                connection.Paint(g);
+            }
+        }
         btnAddConnection.repaint();
         btnAddNode.repaint();
         menuItemKruskal.repaint();
+        jMenuBar1.repaint();
     }
 
     /**
@@ -71,6 +79,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         menuItemKruskal = new javax.swing.JMenuItem();
+        jMenuItemPrim = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kruskal");
@@ -104,6 +113,15 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
             }
         });
         jMenu2.add(menuItemKruskal);
+
+        jMenuItemPrim.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemPrim.setText("Prim");
+        jMenuItemPrim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemPrimActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemPrim);
 
         jMenuBar1.add(jMenu2);
 
@@ -173,6 +191,11 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         this.repaint();
     }//GEN-LAST:event_menuItemKruskalActionPerformed
 
+    private void jMenuItemPrimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPrimActionPerformed
+        this._graphe.insertPrim();
+        this.repaint();
+    }//GEN-LAST:event_jMenuItemPrimActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -203,6 +226,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItemPrim;
     private javax.swing.JMenuItem menuItemKruskal;
     // End of variables declaration//GEN-END:variables
 
