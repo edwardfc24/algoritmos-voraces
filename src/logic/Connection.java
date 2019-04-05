@@ -17,6 +17,7 @@ public class Connection {
     private Node _start, _finish;
     private int _weight;
     private boolean _isKruskal = false;
+    private boolean isPrim = false;
 
     public Connection() {
     }
@@ -37,7 +38,8 @@ public class Connection {
             g.drawLine(_start.getX(), _start.getY(), _finish.getX(), _finish.getY());
             g.setColor(Color.BLACK);
 
-        } else {
+        }
+        else {
             g.drawLine(_start.getX(), _start.getY(), _finish.getX(), _finish.getY());
         }
         if (_start.getX() > _finish.getX() && _start.getY() > _finish.getY())// esto quiere decir que x1 esta mas a la derecha que _finish.getX() y y esta mas abajo que _finish.getY() 
@@ -87,6 +89,14 @@ public class Connection {
 
     public void setIsKruskal(boolean _isKruskal) {
         this._isKruskal = _isKruskal;
+    }
+
+    public boolean isIsPrim() {
+        return isPrim;
+    }
+
+    public void setIsPrim(boolean isPrim) {
+        this.isPrim = isPrim;
     }
 
 }

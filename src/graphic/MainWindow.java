@@ -11,6 +11,8 @@ import java.awt.HeadlessException;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.LinkedList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import logic.*;
 
@@ -35,6 +37,17 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         this.setLocationRelativeTo(null);
         this.addMouseListener(this);
         this.setVisible(true);
+
+        List<Node> insertNodes = new LinkedList<>();
+        insertNodes.add(new Node(0, "nodeA", 100, 150));
+        insertNodes.add(new Node(1, "nodeB", 250, 150));
+        insertNodes.add(new Node(2, "nodeF", 350, 150));
+        insertNodes.add(new Node(3, "nodeC", 100, 300));
+        insertNodes.add(new Node(4, "nodeD", 250, 300));
+        insertNodes.add(new Node(5, "nodeE", 350, 300));
+        insertNodes.add(new Node(6, "nodeF", 250, 450));
+        _graphe.insertNodesList(insertNodes);
+        id = _graphe.getNodes().size();
     }
 
     @Override
@@ -49,6 +62,9 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         }
         for (int i = 0; i < _graphe.getConnections().size(); i++) {
             Connection connection = (Connection) _graphe.getConnections().get(i);
+                if(connection.isIsPrim()){
+                    g.setColor(Color.red);
+                }
             connection.Paint(g);
         }
         btnAddConnection.repaint();
@@ -72,6 +88,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         jMenu2 = new javax.swing.JMenu();
         menuItemKruskal = new javax.swing.JMenuItem();
         MenuItemDijkstra = new javax.swing.JMenuItem();
+        MenuItemPrim = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kruskal");
@@ -114,6 +131,15 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
             }
         });
         jMenu2.add(MenuItemDijkstra);
+
+        MenuItemPrim.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
+        MenuItemPrim.setText("Prim");
+        MenuItemPrim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemPrimActionPerformed(evt);
+            }
+        });
+        jMenu2.add(MenuItemPrim);
 
         jMenuBar1.add(jMenu2);
 
@@ -250,6 +276,29 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         }
     }//GEN-LAST:event_MenuItemDijkstraActionPerformed
 
+    private void MenuItemPrimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemPrimActionPerformed
+        try {
+            String toIdString = JOptionPane.showInputDialog("To (insert id)");
+            if (toIdString == null) {
+                return;
+            }
+//            List<Connection> result=this._graphe.getPrim().getPrim(Integer.parseInt(toIdString));
+//            for(Connection actual:result){
+//                System.out.println("Peso "+actual.getWeight()+ " Inicio - "+actual.getStart().getContent()+" Fin - "+actual.getFinish().getContent());
+//                
+//            }
+            this._graphe.runPrim(Integer.parseInt(toIdString));
+            repaint();
+            validate();
+            
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(rootPane, "-The start field must be an integer number\n"
+                    + "\nERROR:\n" + e.getMessage());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        }
+    }//GEN-LAST:event_MenuItemPrimActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -276,6 +325,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem MenuItemDijkstra;
+    private javax.swing.JMenuItem MenuItemPrim;
     private javax.swing.JButton btnAddConnection;
     private javax.swing.JButton btnAddNode;
     private javax.swing.JMenu jMenu1;

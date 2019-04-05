@@ -22,12 +22,13 @@ public class Graphe<E, T> {
     private List<Connection> _MinRouteTree = new LinkedList<>();
     public int actual_max = 0;
     private Dijkstra dijkstra = new Dijkstra(_nodes, _connections);
+    private Prim prim = new Prim(_connections, _nodes);
 
     public Graphe() {
     }
 
     public String insertNode(E id, T content, int x, int y) {
-        Node<T> node = new Node(content, id);
+        Node<T> node = new Node(id, content);
         if (_nodes.containsKey(id)) {
             System.out.println("Node already exits");
             return "The node with id: con el identificador " + id + " already exist.";
@@ -117,6 +118,21 @@ public class Graphe<E, T> {
 
     }
 
+    public void runPrim(int starNode) {
+    
+        List<Connection> primList = prim.getPrim(starNode);
+        for (int i = 0; i < _connections.size(); i++) {
+            Connection actual = _connections.get(i);
+            for (Connection primActual : primList) {
+                if (actual.equals(primActual)) {
+                    _connections.get(i).setIsKruskal(true);
+                }
+            }
+        }
+        
+        prim.showInConsole();
+    }
+
     public String runDijkstra(int toId, int fromId) {
 
         String insertResult = dijkstra.insertStartAndFinishNode(toId, fromId);
@@ -132,6 +148,33 @@ public class Graphe<E, T> {
             System.out.println(actual.getStart().getId() + " " + actual.getFinish().getId() + " " + actual.getWeight());
         }
         return "ok";
+    }
+
+    public void insertNodesList(List<Node<T>> list) {
+        for (Node node : list) {
+            insertNode((E) node.getId(), (T) node.getContent(), node.getX(), node.getY());
+        }
+        /*
+        insertNodes.add(new Node(0, "nodeA", 100, 150));
+        insertNodes.add(new Node(1, "nodeB", 250, 150));
+        insertNodes.add(new Node(2, "nodeF", 350, 150));
+        insertNodes.add(new Node(3, "nodeC", 100, 300));
+        insertNodes.add(new Node(4, "nodeD", 250, 300));
+        insertNodes.add(new Node(5, "nodeE", 350, 300));
+        insertNodes.add(new Node(6, "nodeF", 250, 450));
+         */
+        _connections.add(new Connection(5, _nodes.get(0), _nodes.get(1)));
+        _connections.add(new Connection(8, _nodes.get(0), _nodes.get(3)));
+        _connections.add(new Connection(7, _nodes.get(0), _nodes.get(4)));
+        _connections.add(new Connection(3, _nodes.get(1), _nodes.get(2)));
+        _connections.add(new Connection(9, _nodes.get(1), _nodes.get(4)));
+        _connections.add(new Connection(6, _nodes.get(2), _nodes.get(4)));
+        _connections.add(new Connection(5, _nodes.get(2), _nodes.get(5)));
+        _connections.add(new Connection(6, _nodes.get(3), _nodes.get(4)));
+        _connections.add(new Connection(3, _nodes.get(4), _nodes.get(5)));
+        _connections.add(new Connection(4, _nodes.get(3), _nodes.get(6)));
+        _connections.add(new Connection(5, _nodes.get(4), _nodes.get(6)));
+        _connections.add(new Connection(9, _nodes.get(5), _nodes.get(6)));
     }
 
     public List<Connection> getConnections() {
@@ -156,6 +199,14 @@ public class Graphe<E, T> {
 
     public void setDijkstra(Dijkstra dijkstra) {
         this.dijkstra = dijkstra;
+    }
+
+    public Prim getPrim() {
+        return prim;
+    }
+
+    public void setPrim(Prim prim) {
+        this.prim = prim;
     }
 
     @Override

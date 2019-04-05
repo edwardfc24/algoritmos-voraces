@@ -24,3 +24,5 @@ build/classes/logic/Main\.class
 nbproject/private/private\.xml
 
 src/graphic/MainWindow\.form
+
+nbproject/build-impl\.xml
