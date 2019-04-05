@@ -70,6 +70,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItemPrim = new javax.swing.JMenuItem();
         menuItemKruskal = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -95,6 +96,15 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Methods");
+
+        jMenuItemPrim.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemPrim.setText("Prim");
+        jMenuItemPrim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemPrimActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemPrim);
 
         menuItemKruskal.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_MASK));
         menuItemKruskal.setText("Kruskal");
@@ -173,6 +183,11 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         this.repaint();
     }//GEN-LAST:event_menuItemKruskalActionPerformed
 
+    private void jMenuItemPrimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPrimActionPerformed
+        this._graphe.primAlgorithm(0);
+        this.repaint();
+    }//GEN-LAST:event_jMenuItemPrimActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -203,6 +218,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItemPrim;
     private javax.swing.JMenuItem menuItemKruskal;
     // End of variables declaration//GEN-END:variables
 

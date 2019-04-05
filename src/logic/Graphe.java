@@ -115,7 +115,52 @@ public class Graphe<E, T> {
             actual.setIsKruskal(true);
         }
     }
+    
+    public void primAlgorithm(int nodeId) {
+        Node startNode = _nodes.get(nodeId);
+        startNode.setIsVisited(true);
+        Connection minConnection = getMinConnection(startNode);
+        if (minConnection != null) {
+            minConnection.setIsKruskal(true);
 
+            if (startNode.getId() == minConnection.getStart().getId() && minConnection.getFinish().isIsVisited() == false) {
+                primAlgorithm((int) minConnection.getFinish().getId());
+            } else if (startNode.getId() == minConnection.getFinish().getId() && minConnection.getStart().isIsVisited() == false) {
+                primAlgorithm((int) minConnection.getStart().getId());
+            }
+        }
+    }
+
+    public Connection getMinConnection(Node node) {
+        Connection minConnection = null;
+        for (Connection connection : _connections) {
+            if (!connection.isIsKruskal()) {
+                if (connection.getStart().equals(node) && connection.getFinish().isIsVisited() == false
+                        || connection.getFinish().equals(node) && connection.getStart().isIsVisited() == false) {
+                    if (minConnection == null || connection.getWeight() < minConnection.getWeight()) {
+                        minConnection = connection;
+                    }
+                }
+            }
+        }
+        if (minConnection == null) {
+            minConnection = getMinConnection();
+        }
+        return minConnection;
+    }
+
+    public Connection getMinConnection() {
+        Connection minConnection = null;
+        for (Connection connection : _connections) {
+            if ((connection.getStart().isIsVisited() == true && connection.getFinish().isIsVisited() == false)
+                    || (connection.getStart().isIsVisited() == false && connection.getFinish().isIsVisited() == true)
+                    && (minConnection == null || connection.getWeight() < minConnection.getWeight())) {
+                minConnection = connection;
+            }
+        }
+        return minConnection;
+    }
+    
     public List<Connection> getConnections() {
         return _connections;
     }
