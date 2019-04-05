@@ -16,6 +16,7 @@ public class Node<E> {
     private E _id;
     private E _content;
     public static final int d = 60; //circulo de 60 pts
+    private boolean isVisited = false;
 
     private int x, y;
 
@@ -25,6 +26,7 @@ public class Node<E> {
     public Node(E id, E content) {
         this._id = id;
         this._content = content;
+        this.isVisited = false;
     }
 
     public void Paint(Graphics g) {
@@ -63,6 +65,14 @@ public class Node<E> {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public boolean isIsVisited() {
+        return isVisited;
+    }
+
+    public void setIsVisited(boolean isVisited) {
+        this.isVisited = isVisited;
     }
 
     @Override

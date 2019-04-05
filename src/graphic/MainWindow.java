@@ -192,7 +192,8 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
     }//GEN-LAST:event_menuItemKruskalActionPerformed
 
     private void jMenuItemPrimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPrimActionPerformed
-        this._graphe.insertPrim();
+//        this._graphe.insertPrim();
+        this._graphe.insertPrim2();
         this.repaint();
     }//GEN-LAST:event_jMenuItemPrimActionPerformed
 
