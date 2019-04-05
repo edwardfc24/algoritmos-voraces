@@ -117,7 +117,6 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
 
         menuItemDijkstra.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
         menuItemDijkstra.setText("Dijkstra");
-        menuItemDijkstra.setActionCommand("Dijkstra");
         menuItemDijkstra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemDijkstraActionPerformed(evt);
@@ -127,6 +126,11 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
 
         menuItemPrim.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         menuItemPrim.setText("Prim");
+        menuItemPrim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemPrimActionPerformed(evt);
+            }
+        });
         jMenu2.add(menuItemPrim);
 
         jMenuBar1.add(jMenu2);
@@ -200,6 +204,11 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
     private void menuItemDijkstraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemDijkstraActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_menuItemDijkstraActionPerformed
+
+    private void menuItemPrimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemPrimActionPerformed
+        _graphe.startPrim(0);
+        this.repaint();
+    }//GEN-LAST:event_menuItemPrimActionPerformed
 
     /**
      * @param args the command line arguments

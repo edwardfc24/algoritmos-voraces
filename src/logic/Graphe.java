@@ -112,7 +112,7 @@ public class Graphe<E, T> {
         }
 
         for (Connection actual : _MinRouteTree) {
-            actual.setIsKruskal(true);
+            actual.setIsVisited(true);
         }
     }
 
@@ -148,11 +148,59 @@ public class Graphe<E, T> {
         _connections.add(new Connection((int) (Math.random() * 10 + 1), _nodes.get(2), _nodes.get(4)));
         _connections.add(new Connection((int) (Math.random() * 10 + 1), _nodes.get(3), _nodes.get(4)));
     }
-    
-    public void cleanBool(){
+
+    public void cleanBool() {
         for (Connection _connection : _connections) {
-            _connection.setIsKruskal(false);
+            _connection.setIsVisited(false);
         }
+        for (int i = 0; i < _nodes.size(); i++) {
+            _nodes.get(i).setIsVisited(false);
+        }
+    }
+
+    public void startPrim(int nodeId) {
+        Node startNode = _nodes.get(nodeId);
+        startNode.setIsVisited(true);
+        Connection minConnection = getMinConnection(startNode);
+        if (minConnection != null) {
+            minConnection.setIsVisited(true);
+
+            if (startNode.getId() == minConnection.getStart().getId() && minConnection.getFinish().isIsVisited() == false) {
+                startPrim((int) minConnection.getFinish().getId());
+            } else if (startNode.getId() == minConnection.getFinish().getId() && minConnection.getStart().isIsVisited() == false) {
+                startPrim((int) minConnection.getStart().getId());
+            }
+        }
+    }
+
+    public Connection getMinConnection(Node node) {
+        Connection minConnection = null;
+        for (Connection connection : _connections) {
+            if (!connection.isIsVisited()) {
+                if (connection.getStart().equals(node) && connection.getFinish().isIsVisited() == false
+                        || connection.getFinish().equals(node) && connection.getStart().isIsVisited() == false) {
+                    if (minConnection == null || connection.getWeight() < minConnection.getWeight()) {
+                        minConnection = connection;
+                    }
+                }
+            }
+        }
+        if (minConnection == null) {
+            minConnection = getMinConnection();
+        }
+        return minConnection;
+    }
+
+    public Connection getMinConnection() {
+        Connection minConnection = null;
+        for (Connection connection : _connections) {
+            if ((connection.getStart().isIsVisited() == true && connection.getFinish().isIsVisited() == false)
+                    || (connection.getStart().isIsVisited() == false && connection.getFinish().isIsVisited() == true)
+                    && (minConnection == null || connection.getWeight() < minConnection.getWeight())) {
+                minConnection = connection;
+            }
+        }
+        return minConnection;
     }
 
 }

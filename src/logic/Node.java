@@ -15,6 +15,7 @@ public class Node<E> {
 
     private E _id;
     private E _content;
+    private boolean isVisited = false;
     public static final int d = 60; //circulo de 60 pts
 
     private int x, y;
@@ -75,6 +76,14 @@ public class Node<E> {
     @Override
     public String toString() {
         return "Id: " + _id + "\nContent: " + _content;
+    }
+
+    public boolean isIsVisited() {
+        return isVisited;
+    }
+
+    public void setIsVisited(boolean isVisited) {
+        this.isVisited = isVisited;
     }
 
 }

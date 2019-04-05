@@ -26,7 +26,6 @@
                   <KeyStroke key="Ctrl+D"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Dijkstra"/>
-                <Property name="actionCommand" type="java.lang.String" value="Dijkstra"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemDijkstraActionPerformed"/>
@@ -39,6 +38,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Prim"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemPrimActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

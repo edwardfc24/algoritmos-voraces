@@ -16,7 +16,7 @@ public class Connection {
 
     private Node _start, _finish;
     private int _weight;
-    private boolean _isKruskal = false;
+    private boolean _isVisited = false;
 
     public Connection() {
     }
@@ -29,11 +29,8 @@ public class Connection {
     }
 
     public void Paint(Graphics g) {
-        if (_isKruskal) {
-            int red = (int) (Math.random() * 206) + 50;
-            int green = (int) (Math.random() * 226) + 30;
-            int blue = (int) (Math.random() * 176) + 80;
-            g.setColor(new Color((red), (green), (blue)));
+        if (_isVisited) {
+            g.setColor(Color.RED);
             g.drawLine(_start.getX(), _start.getY(), _finish.getX(), _finish.getY());
             g.setColor(Color.BLACK);
 
@@ -81,12 +78,12 @@ public class Connection {
         this._finish = _finish;
     }
 
-    public boolean isIsKruskal() {
-        return _isKruskal;
+    public boolean isIsVisited() {
+        return _isVisited;
     }
 
-    public void setIsKruskal(boolean _isKruskal) {
-        this._isKruskal = _isKruskal;
+    public void setIsVisited(boolean _isVisited) {
+        this._isVisited = _isVisited;
     }
 
 }
