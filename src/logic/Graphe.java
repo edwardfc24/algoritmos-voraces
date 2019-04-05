@@ -119,189 +119,154 @@ public class Graphe<E, T> {
         });
     }
 
-    public void insertPrim() {
-
-//        int totalNodes = _nodes.size();
-//        Node nodeOrigin = _nodes.get(0);
-//        if (nodeOrigin != null) {
-//
-//        }
-
-//        int count = 0;
-//        for (Connection connection : _connections) {
-//            boolean flag1 = false;
-//            boolean flag2 = false;
-//            for (Connection MinRouteTree : _MinRouteTree) {
-//                if (connection.getStart().equals(MinRouteTree.getStart()) || connection.getStart().equals(MinRouteTree.getFinish())) {
-//                    flag1 = true;
-//
-//                }
-//                if (connection.getFinish().equals(MinRouteTree.getStart()) || connection.getFinish().equals(MinRouteTree.getFinish())) {
-//                    flag2 = true;
-//
-//                }
-//            }
-//            if (!(flag1 && flag2)) {
-//                _MinRouteTree.add(connection);
-//                if (_connections.size() > 0) {
-//                    _connections.remove(count);
-//                    count++;
-//                }
-//            }
-//        }
-//
-//        _MinRouteTree.forEach((actual) -> {
-//            actual.setIsKruskal(true);
-//        });
-//        List<Connection> unVisited = new LinkedList<>();
-//        unVisited.addAll(_connections);
-//        unVisited.remove(_connections.get(0));
-//
-//        List<Connection> edges = new LinkedList<>();
-//        edges.addAll(_connections);
-//
-//        List<Connection> path = new LinkedList<>();
-//        List<Connection> edgesAvalible = new LinkedList<>();
-//
-//        List<Connection> ready = new LinkedList<>();
-//        ready.addAll(_connections);
-//        while (!unVisited.isEmpty()) {
-//            for (Connection e : ready) {
-//                if (unVisited.contains(e.getStart())) {
-//                    edgesAvalible.add(e);
-//                }
-//            }
-//        }
-//        
-//        List<Connection> e = edgesAvalible.remove();
-//        List<Connection> auxList = new LinkedList<>();
-//        for (Connection _connections : _connections) {
-//            System.out.println("Start: " + _connections.getStart() + " - Finish: " + _connections.getFinish() + " - Peso: " + _connections.getWeight());
-//        }
-//        for (Connection connection : _connections) {
-//            boolean flag1 = false;
-//            boolean flag2 = false;
-//            for (Connection connection2 : _connections) {
-//                if (connection.getStart().equals(connection2.getStart()) || connection.getStart().equals(connection2.getFinish())) {
-//                    flag1 = true;
-//                }
-//                if (connection.getFinish().equals(connection2.getStart()) || connection.getFinish().equals(connection2.getFinish())) {
-//                    flag2 = true;
-//                }
-//            }
-//            if (flag1 == true && flag2 == true) {
-//                //        connection.getStart().setIsVisited(true);
-//                _RoutePrim.add(connection);
-//                for (Connection connection1 : _RoutePrim) {
-//                    System.out.println("Prim\n" + "Start: " + connection1.getStart() + " - Finish: " + connection1.getFinish() + " - Peso: " + connection1.getWeight());
-//                }
-//            }
-//        }
-//
-//        for (Connection actual : _RoutePrim) {
-//            actual.setIsPrim(true);
-//        }
-//        List<Connection> auxList = new LinkedList<>();
-//        auxList.addAll(_connections);
-//        for (Connection connection : _connections) {
-//            if (!connection.getStart().isIsVisited()) {
-//                connection.getStart().setIsVisited(true);
-//                _RoutePrim.add(connection);
-//                _connections.remove(connection);
-//            }
-////            
-////            if (!connection.getFinish().isIsVisited()) {
-////                connection.getFinish().setIsVisited(true);
-////                _RoutePrim.add(connection);
-////            }
-//        }
-//
-//        _MinRouteTree.forEach((actual) -> {
-//            actual.setIsKruskal(true);
-//        });
-        int value = 0;
-        for (Connection connection : _connections) {
-            boolean flag1 = false;
-            boolean flag2 = false;
-            for (Connection MinRouteTree : _MinRouteTree) {
-                if (connection.getStart().equals(MinRouteTree.getStart()) || connection.getStart().equals(MinRouteTree.getFinish())) {
-                    flag1 = true;
-
+    public void insertPrim3(int nodo) {
+        Node actualNodo = _nodes.get(nodo);
+        actualNodo.setIsVisited(true);
+        Connection newConnection = null;
+        for (Connection connections : _connections) {
+            if (!connections.isIsVisited()) {
+                if (actualNodo.equals(connections.getStart()) && connections.getFinish().isIsVisited() == false
+                        || actualNodo.equals(connections.getFinish()) && connections.getStart().isIsVisited() == false) {
+                    newConnection = connections;
+                    break;
                 }
-                if (connection.getFinish().equals(MinRouteTree.getStart()) || connection.getFinish().equals(MinRouteTree.getFinish())) {
-                    flag2 = true;
-
-                }
-            }
-            if (!(flag1 && flag2)) {
-                verifyConnections((int) connection.getStart().getId());
-                int max_weight = 0;
-                for (Connection maxConnection : _verifyConnections) {
-                    if (maxConnection.getWeight() > max_weight) {
-                        _verifyConnectionsAux.add(maxConnection);
-                        max_weight = maxConnection.getWeight();
-                    } else {
-                        List<Connection> auxList = new LinkedList<>();
-                        auxList.addAll(_verifyConnectionsAux);
-                        _verifyConnectionsAux.clear();
-                        int contador = 0;
-                        for (Connection item : auxList) {
-                            if (connection.getWeight() > item.getWeight()) {
-                                _verifyConnectionsAux.add(item);
-                            } else {
-                                _verifyConnectionsAux.add(connection);
-                                break;
-                            }
-                            contador++;
-                        }
-                        _verifyConnectionsAux.addAll(auxList.subList(contador, auxList.size()));
-                        contador = 0;
-                    }
-                }
-                _MinRouteTree.add(connection);
             }
         }
-
-        _MinRouteTree.forEach((actual) -> {
-            actual.setIsKruskal(true);
-        });
-    }
-    
-    
-    public void insertPrim2(){
-        
-    }
-
-    private Connection verifyConnections(int start) {
-        Node<E> _Start = (Node<E>) _nodes.get(start);
-        int max_weight = 0;
-        _verifyConnections.clear();
-        for (Connection actualConnection : _connections) {
-            if (_Start.equals(actualConnection.getStart()) || _Start.equals(actualConnection.getFinish())) {
-                if (actualConnection.getWeight() > max_weight) {
-                    _verifyConnections.add(actualConnection);
-                    max_weight = actualConnection.getWeight();
-                } else {
-                    int position = 0;
-                    List<Connection> auxList = new LinkedList<>();
-                    auxList.addAll(_verifyConnections);
-                    _verifyConnections.clear();
-                    for (Connection item : auxList) {
-                        if (actualConnection.getWeight() > item.getWeight()) {
-                            _verifyConnections.add(item);
+        if (newConnection == null) {
+            for (Connection connections : _connections) {
+                if (!connections.isIsVisited()) {
+                    if (connections.getFinish().isIsVisited() == true && connections.getStart().isIsVisited() == false
+                            || connections.getStart().isIsVisited() == true && connections.getFinish().isIsVisited() == false) {
+                        if (connections.getFinish().isIsVisited() == false) {
+                            actualNodo = connections.getFinish();
                         } else {
-                            _verifyConnections.add(actualConnection);
+                            actualNodo = connections.getStart();
+                        }
+                        newConnection = connections;
+                        break;
+                    }
+                }
+            }
+        }
+        if (newConnection != null) {
+            newConnection.setIsVisited(true);
+            if (newConnection.getStart().equals(actualNodo) && newConnection.getFinish().isIsVisited() == false
+                    || newConnection.getFinish().equals(actualNodo) && newConnection.getStart().isIsVisited() == false) {
+                if (newConnection.getStart().equals(actualNodo)) {
+                    insertPrim3((int) newConnection.getFinish().getId());
+                } else {
+                    insertPrim3((int) newConnection.getStart().getId());
+                }
+            } else {
+                for (Connection connections : _connections) {
+                    if (!connections.isIsVisited()) {
+                        if (connections.getFinish().isIsVisited() == true && connections.getStart().isIsVisited() == false
+                                || connections.getStart().isIsVisited() == true && connections.getFinish().isIsVisited() == false) {
+
+                            newConnection = connections;
                             break;
                         }
-                        position++;
                     }
-                    _verifyConnections.addAll(auxList.subList(position, auxList.size()));
+                }
+                if (newConnection != null) {
+                    newConnection.setIsVisited(true);
+                    if (newConnection.getStart().equals(actualNodo) && newConnection.getFinish().isIsVisited() == false
+                            || newConnection.getFinish().equals(actualNodo) && newConnection.getStart().isIsVisited() == false) {
+                        if (newConnection.getStart().equals(actualNodo)) {
+                            insertPrim3((int) newConnection.getFinish().getId());
+                        } else {
+                            insertPrim3((int) newConnection.getStart().getId());
+                        }
+                    }
                 }
             }
         }
-        return _verifyConnections.get(0); //Retorna la conexion mas chica
     }
 
+    public void resetVisited() {
+        for (Connection _connection : _connections) {
+            _connection.setIsVisited(false);
+        }
+
+        for (int i = 0; i < _nodes.size(); i++) {
+            _nodes.get(i).setIsVisited(false);
+        }
+    }
+
+    public void startPrim(int nodeId) {
+        Node startNode = _nodes.get(nodeId);
+        startNode.setIsVisited(true);
+        Connection minConnection = getMinConnection(startNode);
+        if (minConnection != null) {
+            minConnection.setIsVisited(true);
+
+            if (startNode.getId() == minConnection.getStart().getId() && minConnection.getFinish().isIsVisited() == false) {
+                startPrim((int) minConnection.getFinish().getId());
+            } else if (startNode.getId() == minConnection.getFinish().getId() && minConnection.getStart().isIsVisited() == false) {
+                startPrim((int) minConnection.getStart().getId());
+            }
+        }
+    }
+
+    public Connection getMinConnection(Node node) {
+        Connection minConnection = null;
+        for (Connection connection : _connections) {
+            if (!connection.isIsVisited()) {
+                if (connection.getStart().equals(node) && connection.getFinish().isIsVisited() == false
+                        || connection.getFinish().equals(node) && connection.getStart().isIsVisited() == false) {
+                    if (minConnection == null || connection.getWeight() < minConnection.getWeight()) {
+                        minConnection = connection;
+                    }
+                }
+            }
+        }
+        if (minConnection == null) {
+            minConnection = getMinConnection();
+        }
+        return minConnection;
+    }
+
+    public Connection getMinConnection() {
+        Connection minConnection = null;
+        for (Connection connection : _connections) {
+            if ((connection.getStart().isIsVisited() == true && connection.getFinish().isIsVisited() == false)
+                    || (connection.getStart().isIsVisited() == false && connection.getFinish().isIsVisited() == true)
+                    && (minConnection == null || connection.getWeight() < minConnection.getWeight())) {
+                minConnection = connection;
+            }
+        }
+        return minConnection;
+    }
+
+//    private Connection verifyConnections(int start) {
+//        Node<E> _Start = (Node<E>) _nodes.get(start);
+//        int max_weight = 0;
+//        _verifyConnections.clear();
+//        for (Connection actualConnection : _connections) {
+//            if (_Start.equals(actualConnection.getStart()) || _Start.equals(actualConnection.getFinish())) {
+//                if (actualConnection.getWeight() > max_weight) {
+//                    _verifyConnections.add(actualConnection);
+//                    max_weight = actualConnection.getWeight();
+//                } else {
+//                    int position = 0;
+//                    List<Connection> auxList = new LinkedList<>();
+//                    auxList.addAll(_verifyConnections);
+//                    _verifyConnections.clear();
+//                    for (Connection item : auxList) {
+//                        if (actualConnection.getWeight() > item.getWeight()) {
+//                            _verifyConnections.add(item);
+//                        } else {
+//                            _verifyConnections.add(actualConnection);
+//                            break;
+//                        }
+//                        position++;
+//                    }
+//                    _verifyConnections.addAll(auxList.subList(position, auxList.size()));
+//                }
+//            }
+//        }
+//        return _verifyConnections.get(0); //Retorna la conexion mas chica
+//    }
     public List<Connection> getRoutePrim() {
         return _RoutePrim;
     }

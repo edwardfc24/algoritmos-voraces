@@ -25,7 +25,7 @@ import logic.*;
  */
 public class MainWindow extends javax.swing.JFrame implements MouseListener {
 
-    private final Graphe _graphe = new Graphe();
+    private Graphe _graphe = new Graphe();
     private Node moveNode = null;
     private int id = 0;
 
@@ -51,13 +51,8 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
             Connection connection = (Connection) _graphe.getConnections().get(i);
             connection.Paint(g);
         }
-        if (_graphe.getRoutePrim().size() > 0) {
-            g.setColor(Color.red);
-            for (int i = 0; i < _graphe.getRoutePrim().size(); i++) {
-                Connection connection = (Connection) _graphe.getRoutePrim().get(i);
-                connection.Paint(g);
-            }
-        }
+
+        _graphe.resetVisited();
         btnAddConnection.repaint();
         btnAddNode.repaint();
         menuItemKruskal.repaint();
@@ -77,6 +72,8 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         btnAddConnection = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         menuItemKruskal = new javax.swing.JMenuItem();
         jMenuItemPrim = new javax.swing.JMenuItem();
@@ -101,6 +98,19 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         });
 
         jMenu1.setText("File");
+
+        jMenu3.setText("Prefab Graphes");
+
+        jMenuItem1.setText("Graphe 1");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem1);
+
+        jMenu1.add(jMenu3);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Methods");
@@ -192,10 +202,48 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
     }//GEN-LAST:event_menuItemKruskalActionPerformed
 
     private void jMenuItemPrimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPrimActionPerformed
-//        this._graphe.insertPrim();
-        this._graphe.insertPrim2();
+        this._graphe.insertPrim3(0);
         this.repaint();
     }//GEN-LAST:event_jMenuItemPrimActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        id = 0;
+        //Se le quito el final a la variable _graphe
+        _graphe = new Graphe();
+
+        Node nodoPrefab1 = new Node(id, 7, 200, 200);
+        id++;
+        Node nodoPrefab5 = new Node(id, 3, 100, 350);
+        id++;
+        Node nodoPrefab3 = new Node(id, 5, 200, 450);
+        id++;
+        Node nodoPrefab4 = new Node(id, 9, 500, 300);
+        id++;
+        Node nodoPrefab2 = new Node(id, 8, 300, 300);
+        id++;
+
+        _graphe.insertNode(nodoPrefab1);
+        _graphe.insertNode(nodoPrefab2);
+        _graphe.insertNode(nodoPrefab3);
+        _graphe.insertNode(nodoPrefab4);
+        _graphe.insertNode(nodoPrefab5);
+
+        String result2 = this._graphe.insertConnection(4, 2, 7);
+        if (!result2.equals("ok")) {
+            JOptionPane.showMessageDialog(this, result2);
+        }
+
+        for (int i = 0, j = 1; j <= 4; i++, j++) {
+            int aleatorio = (int) Math.floor(Math.random() * 20);
+            //                                           01 12 23 34
+            System.out.println(i + " - " + j + " - " + aleatorio);
+            String result = this._graphe.insertConnection(i, j, aleatorio);
+            if (!result.equals("ok")) {
+                JOptionPane.showMessageDialog(this, result);
+            }
+        }
+        repaint();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -226,7 +274,9 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
     private javax.swing.JButton btnAddNode;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItemPrim;
     private javax.swing.JMenuItem menuItemKruskal;
     // End of variables declaration//GEN-END:variables
