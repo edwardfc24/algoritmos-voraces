@@ -74,6 +74,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         jMenu1 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         menuItemKruskal = new javax.swing.JMenuItem();
         jMenuItemPrim = new javax.swing.JMenuItem();
@@ -108,6 +109,14 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
             }
         });
         jMenu3.add(jMenuItem1);
+
+        jMenuItem2.setText("Graphe 2");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem2);
 
         jMenu1.add(jMenu3);
 
@@ -146,7 +155,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
                 .addComponent(btnAddNode)
                 .addGap(45, 45, 45)
                 .addComponent(btnAddConnection)
-                .addContainerGap(138, Short.MAX_VALUE))
+                .addContainerGap(229, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,6 +254,54 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         repaint();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+       id = 0;
+        //Se le quito el final a la variable _graphe
+        _graphe = new Graphe();
+        
+        Node nodoPrefab1 = new Node(id, 7, 100, 200);
+        id++;
+        Node nodoPrefab2 = new Node(id, 3, 350, 450);
+        id++;
+        Node nodoPrefab3 = new Node(id, 5, 150, 550);
+        id++;
+        Node nodoPrefab4 = new Node(id, 9, 400, 300);
+        id++;
+        Node nodoPrefab5 = new Node(id, 8, 250, 300);
+        id++;
+        Node nodoPrefab6 = new Node(id, 1, 550, 250);
+        id++;
+        Node nodoPrefab7 = new Node(id, 1, 600, 400);
+        id++;
+        
+        _graphe.insertNode(nodoPrefab1);
+        _graphe.insertNode(nodoPrefab2);
+        _graphe.insertNode(nodoPrefab3);
+        _graphe.insertNode(nodoPrefab4);
+        _graphe.insertNode(nodoPrefab5);
+        _graphe.insertNode(nodoPrefab6);
+        _graphe.insertNode(nodoPrefab7);
+        
+        String result2 = this._graphe.insertConnection(4, 2, 7);
+        if (!result2.equals("ok")) {
+            JOptionPane.showMessageDialog(this, result2);
+        }
+
+        for (int i = 0, j = 1; j <= 6; i++, j++) {
+            int aleatorio = (int) Math.floor(Math.random() * 20);
+            //                                           01 12 23 34
+            System.out.println(i + " - " + j + " - " + aleatorio);
+            String result = this._graphe.insertConnection(i, j, aleatorio);
+            if (!result.equals("ok")) {
+                JOptionPane.showMessageDialog(this, result);
+            }
+        }
+        repaint();
+        
+        
+        repaint();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -277,6 +334,7 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItemPrim;
     private javax.swing.JMenuItem menuItemKruskal;
     // End of variables declaration//GEN-END:variables
