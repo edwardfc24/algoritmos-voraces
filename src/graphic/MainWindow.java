@@ -42,9 +42,9 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         insertNodes.add(new Node(0, "nodeA", 100, 150));
         insertNodes.add(new Node(1, "nodeB", 250, 150));
         insertNodes.add(new Node(2, "nodeF", 350, 150));
-        insertNodes.add(new Node(3, "nodeC", 100, 300));
-        insertNodes.add(new Node(4, "nodeD", 250, 300));
-        insertNodes.add(new Node(5, "nodeE", 350, 300));
+        insertNodes.add(new Node(3, "nodeC", 90, 310));
+        insertNodes.add(new Node(4, "nodeD", 260, 300));
+        insertNodes.add(new Node(5, "nodeE", 370, 310));
         insertNodes.add(new Node(6, "nodeF", 250, 450));
         _graphe.insertNodesList(insertNodes);
         id = _graphe.getNodes().size();
@@ -62,9 +62,6 @@ public class MainWindow extends javax.swing.JFrame implements MouseListener {
         }
         for (int i = 0; i < _graphe.getConnections().size(); i++) {
             Connection connection = (Connection) _graphe.getConnections().get(i);
-                if(connection.isIsPrim()){
-                    g.setColor(Color.red);
-                }
             connection.Paint(g);
         }
         btnAddConnection.repaint();

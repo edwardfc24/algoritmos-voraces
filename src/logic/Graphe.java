@@ -125,7 +125,7 @@ public class Graphe<E, T> {
             Connection actual = _connections.get(i);
             for (Connection primActual : primList) {
                 if (actual.equals(primActual)) {
-                    _connections.get(i).setIsKruskal(true);
+                    _connections.get(i).setIsPrim(true);
                 }
             }
         }

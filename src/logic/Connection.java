@@ -39,7 +39,13 @@ public class Connection {
             g.setColor(Color.BLACK);
 
         }
-        else {
+
+        if (isPrim) {
+            g.setColor(Color.red);
+            g.drawLine(_start.getX(), _start.getY(), _finish.getX(), _finish.getY());
+            g.setColor(Color.BLACK);
+
+        } else {
             g.drawLine(_start.getX(), _start.getY(), _finish.getX(), _finish.getY());
         }
         if (_start.getX() > _finish.getX() && _start.getY() > _finish.getY())// esto quiere decir que x1 esta mas a la derecha que _finish.getX() y y esta mas abajo que _finish.getY() 

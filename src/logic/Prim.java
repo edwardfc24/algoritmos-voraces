@@ -36,7 +36,6 @@ public class Prim<E, T> {
         if (allVisited()) {
             return _listPrim;
         }
-//        List<Connection> connectionList = verifyConnections(startNode);
         Connection min = minConnection(startNode, _Pendingconnections);
 
         boolean isValid = verifyLoop(min);
